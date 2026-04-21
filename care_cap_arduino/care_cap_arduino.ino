@@ -2,26 +2,23 @@
 #include <ArduinoBLE.h>
 
 // ── BLE UUIDs (must match the webapp exactly) ─────────────────────────────────
-#define SERVICE_UUID  "19b10000-e8f2-537e-4f6c-d104768a1214"
-#define CHAR_UUID     "19b10001-e8f2-537e-4f6c-d104768a1214"
+#define SERVICE_UUID "19b10000-e8f2-537e-4f6c-d104768a1214"
+#define CHAR_UUID "19b10001-e8f2-537e-4f6c-d104768a1214"
 
 BLEService sensorService(SERVICE_UUID);
 // 40 bytes: 8 temp floats (32 bytes) + 2 pressure floats (8 bytes)
 BLECharacteristic sensorChar(CHAR_UUID, BLERead | BLENotify, 40);
 
 // ── Thermistor settings ───────────────────────────────────────────────────────
-#define RT0 10000.0   // NTC nominal resistance at 25°C
-#define B   3977.0    // B-coefficient
-#define VCC 3.3       // Nano 33 BLE runs at 3.3V
-#define R   10000.0   // Fixed pull-down resistor
-#define T0  298.15    // 25°C in Kelvin
+#define RT0 10000.0  // NTC nominal resistance at 25°C
+#define B 3977.0     // B-coefficient
+#define VCC 3.3      // Nano 33 BLE runs at 3.3V
+#define R 10000.0    // Fixed pull-down resistor
+#define T0 298.15    // 25°C in Kelvin
 
 // ── Sensor pins ───────────────────────────────────────────────────────────────
 const int numSensors = 8;
-const int sensorPins[numSensors] = {A0, A1, A2, A3, A4, A5, A6, A7};
-
-// Sensor order must match the webapp's SENSOR_PROFILES:
-//   Index 0 → Fz  (Front Centre)
+//   Index 0 → Fz  (Front Centre)kkk
 //   Index 1 → FCz (Mid Centre)
 //   Index 2 → Cz  (Crown)
 //   Index 3 → Oz  (Back Centre)
@@ -44,7 +41,7 @@ float temperatures[numSensors];
 
 // ── Pressure sensor pins (digital — LOW = good contact) ───────────────────────
 const int pressureSensor1 = 2;
-const int pressureSensor2 = 4;
+const int pressureSensor2 = 3;
 
 // 1.0 = good contact, 0.0 = no contact
 // The webapp converts these to realistic Pa display values
@@ -63,7 +60,7 @@ void setup() {
   Serial.begin(115200);
   delay(1500);
 
-  analogReadResolution(10); // 0–1023
+  analogReadResolution(10);  // 0–1023
   // INPUT_PULLUP enables the internal pull-up resistor so the pin reads HIGH
   // when the sensor is not pressed, and LOW when it is — no floating pin noise
   pinMode(pressureSensor1, INPUT_PULLUP);
@@ -72,10 +69,11 @@ void setup() {
   // ── Initialise BLE ──────────────────────────────────────────────────────────
   if (!BLE.begin()) {
     Serial.println("ERROR: BLE failed to start. Check board/library.");
-    while (1);
+    while (1)
+      ;
   }
 
-  BLE.setLocalName("CareCap");           // name the webapp scans for
+  BLE.setLocalName("CareCap");  // name the webapp scans for
   BLE.setAdvertisedService(sensorService);
   sensorService.addCharacteristic(sensorChar);
   BLE.addService(sensorService);
@@ -98,7 +96,7 @@ void loop() {
 
     while (central.connected()) {
       readAndSend();
-      delay(500); // send update every 500 ms
+      delay(500);  // send update every 500 ms
     }
 
     Serial.println("Central disconnected — advertising again.");
@@ -119,10 +117,10 @@ void readAndSend() {
     }
 
     float adcAvg = adcSum / (float)numSamples;
-    float VRT    = (adcAvg / 1023.0) * VCC;
+    float VRT = (adcAvg / 1023.0) * VCC;
 
     if (VRT <= 0.01 || VRT >= (VCC - 0.01)) {
-      temperatures[i] = -999.0; // error sentinel
+      temperatures[i] = -999.0;  // error sentinel
       Serial.print(zoneNames[i]);
       Serial.println(" -> Sensor error");
       writeFloat(payload, i * 4, -999.0);
@@ -130,7 +128,7 @@ void readAndSend() {
     }
 
     // Pull-down config: 3.3V → NTC → analog pin → 10kΩ → GND
-    float RT   = R * ((VCC / VRT) - 1.0);
+    float RT = R * ((VCC / VRT) - 1.0);
     float lnRT = log(RT / RT0);
     float tempK = 1.0 / ((lnRT / B) + (1.0 / T0));
     float tempC = tempK - 273.15;

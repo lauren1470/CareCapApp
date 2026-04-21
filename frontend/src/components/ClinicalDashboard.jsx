@@ -171,11 +171,30 @@ export default function ClinicalDashboard({ data }) {
 
           {/* Clinical reference */}
           <div className="rounded-xl p-3 text-xs" style={{ background: '#e0f0fb', color: '#1e3a4f' }}>
-            <div className="font-semibold mb-1">Clinical Reference</div>
-            <div>Safe temp range: <strong>18–24°C</strong></div>
-            <div>Optimal cooling: <strong>20–22°C</strong></div>
+            <div className="font-semibold mb-2">Clinical Reference</div>
+            <div className="flex flex-col gap-1 mb-2">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#dc2626' }} />
+                <span>Poor Cooling: <strong>&gt;24°C</strong></span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#f97316' }} />
+                <span>Suboptimal: <strong>22–24°C</strong></span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#22c55e' }} />
+                <span>Effective: <strong>18–22°C</strong></span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#14b8a6' }} />
+                <span>Optimal: <strong>12–15°C</strong></span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#75b6e5' }} />
+                <span>Too Cold: <strong>&lt;10°C</strong></span>
+              </div>
+            </div>
             <div>Session duration: <strong>30 min</strong></div>
-            <div>Hotspot threshold: <strong>&gt;24°C</strong></div>
             <div>Pressure range: <strong>1,400–1,930 Pa</strong></div>
             <div className="mt-1 text-gray-500">Protocol: pre/during/post chemotherapy</div>
           </div>

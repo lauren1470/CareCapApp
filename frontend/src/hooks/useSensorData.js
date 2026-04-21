@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 
-const SAFE_TEMP_MIN = 18
-const SAFE_TEMP_MAX = 24
+const SAFE_TEMP_MIN = 18    // lower bound of Effective Cooling range
+const SAFE_TEMP_MAX = 24    // upper bound of Effective Cooling (hotspot threshold)
+const TOO_COLD_THRESHOLD = 10  // below this is Too Cold
 const SESSION_DURATION = 30 * 60
 
 // Sensor layout — 4 down centre, 2 left, 2 right (evenly spaced)
@@ -19,12 +20,14 @@ export const SENSOR_PROFILES = [
 // ── Colour ramp ───────────────────────────────────────────────────────────────
 export function tempToColor(temp) {
   const stops = [
-    { t: 14, r: 37,  g: 99,  b: 235 },
-    { t: 18, r: 75,  g: 182, b: 229 },
-    { t: 22, r: 163, g: 206, b: 237 },
-    { t: 26, r: 253, g: 224, b: 71  },
-    { t: 30, r: 251, g: 146, b: 60  },
-    { t: 36, r: 220, g: 38,  b: 38  },
+    { t:  8, r: 75,  g: 182, b: 229 },  // Too Cold (<10°C)    — blue
+    { t: 10, r: 75,  g: 182, b: 229 },  // Too Cold boundary   — blue
+    { t: 12, r: 20,  g: 184, b: 166 },  // Optimal start       — teal
+    { t: 15, r: 20,  g: 184, b: 166 },  // Optimal end         — teal
+    { t: 18, r: 34,  g: 197, b: 94  },  // Effective start     — green
+    { t: 22, r: 34,  g: 197, b: 94  },  // Effective end       — green
+    { t: 24, r: 249, g: 115, b: 22  },  // Suboptimal end      — orange
+    { t: 28, r: 220, g: 38,  b: 38  },  // Poor Cooling        — red
   ]
   if (temp <= stops[0].t) return `rgb(${stops[0].r},${stops[0].g},${stops[0].b})`
   const last = stops[stops.length - 1]
@@ -40,9 +43,11 @@ export function tempToColor(temp) {
 
 // ── Simulation helpers ────────────────────────────────────────────────────────
 function generateSensorTemp(elapsed, profile, demo = false) {
-  const base = elapsed < 600
-    ? 34 - (elapsed / 600) * 12
-    : 22 + Math.sin(elapsed / 120) * 1.5
+  // Cooling phase: 34°C → 14°C over 700 sim-seconds (~70s real in demo)
+  // Treatment phase: gentle oscillation around 14°C
+  const base = elapsed < 700
+    ? 34 - (elapsed / 700) * 20
+    : 14 + Math.sin(elapsed / 150) * 1.0
   const cooled = 34 - (34 - base) * profile.coolRate
   const noise = (Math.random() - 0.5) * (demo ? 0.15 : 0.4)
   return Math.round((cooled + profile.offset + noise) * 10) / 10
@@ -330,7 +335,7 @@ export function useSensorData() {
     if (phase === 'cooling') return 'cooling'
     if (temperature === null) return 'idle'
     const anyHot      = sensors.some(s => s.temp !== null && s.temp > SAFE_TEMP_MAX)
-    const anyFreezing = sensors.some(s => s.temp !== null && s.temp < SAFE_TEMP_MIN)
+    const anyFreezing = sensors.some(s => s.temp !== null && s.temp < TOO_COLD_THRESHOLD)
     if (anyHot || anyFreezing) return 'warning'
     return 'ok'
   }

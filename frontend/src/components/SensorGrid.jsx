@@ -51,7 +51,7 @@ export default function SensorGrid({ sensors, safeRange, compact = false }) {
         {sensors.map(s => {
           const color = s.temp !== null ? tempToColor(s.temp) : '#94a3b8'
           const isHot = s.temp !== null && s.temp > safeRange.max
-          const isCold = s.temp !== null && s.temp < safeRange.min
+          const isCold = s.temp !== null && s.temp < 10
           const isOk = s.temp !== null && !isHot && !isCold
           const borderColor = isHot ? '#ef4444' : isCold ? '#3b82f6' : isOk ? '#a3ceed' : '#e2e8f0'
 
@@ -96,7 +96,7 @@ export default function SensorGrid({ sensors, safeRange, compact = false }) {
 
       {!compact && (
         <div className="text-xs text-gray-400 text-center">
-          Target: {safeRange.min}–{safeRange.max}°C per sensor
+          Optimal: 12–15°C · Effective: 18–22°C · Poor: &gt;24°C
         </div>
       )}
     </div>

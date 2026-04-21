@@ -212,10 +212,12 @@ export async function exportSessionXLSX({ history, alerts, safeRange, sessionEla
   refTitleRow.height = 24
 
   const refs = [
-    ['Safe temp range',    '18–24°C'],
-    ['Optimal cooling',    '20–22°C'],
+    ['Poor Cooling',       '>24°C'],
+    ['Suboptimal Cooling', '22–24°C'],
+    ['Effective Cooling',  '18–22°C'],
+    ['Optimal Cooling',    '12–15°C'],
+    ['Too Cold',           '<10°C'],
     ['Session duration',   '30 min'],
-    ['Hotspot threshold',  '>24°C'],
     ['Pressure range',     '1,400–1,930 Pa'],
     ['Protocol',           'Pre / During / Post chemotherapy'],
   ]

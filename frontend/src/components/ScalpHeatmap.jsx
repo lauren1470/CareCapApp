@@ -166,13 +166,13 @@ export default function ScalpHeatmap({ sensors, safeRange, showLabels = true }) 
         <div
           className="flex-1 h-3 rounded-full"
           style={{
-            background: 'linear-gradient(to right, rgb(37,99,235), rgb(75,182,229), rgb(163,206,237), rgb(253,224,71), rgb(251,146,60), rgb(220,38,38))'
+            background: 'linear-gradient(to right, rgb(75,182,229), rgb(20,184,166), rgb(34,197,94), rgb(249,115,22), rgb(220,38,38))'
           }}
         />
         <span className="text-xs text-gray-400">Hot</span>
       </div>
       <div className="flex justify-between w-full max-w-72 px-6">
-        {['14°C', '18°C', '22°C', '26°C', '30°C', '36°C'].map(t => (
+        {['<10°C', '12°C', '18°C', '22°C', '>24°C'].map(t => (
           <span key={t} className="text-xs text-gray-400">{t}</span>
         ))}
       </div>

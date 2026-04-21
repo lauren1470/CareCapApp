@@ -98,13 +98,19 @@ Full monitoring dashboard with:
 
 ## Clinical Reference
 
+| Category | Temperature |
+|---|---|
+| 🔴 Poor Cooling | >24°C |
+| 🟠 Suboptimal Cooling | 22–24°C |
+| 🟢 Effective Cooling | 18–22°C |
+| 🩵 Optimal Cooling | 12–15°C |
+| 🔵 Too Cold | <10°C |
+
 | Parameter | Value |
 |---|---|
-| Safe temperature range | 18–24°C |
-| Optimal cooling | 20–22°C |
 | Session duration | 30 minutes |
-| Hotspot threshold | >24°C |
 | Pressure (good contact) | 1,400–1,930 Pa |
+| Protocol | Pre / during / post chemotherapy |
 
 ---
 
