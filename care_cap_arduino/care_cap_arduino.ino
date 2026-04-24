@@ -18,7 +18,10 @@ BLECharacteristic sensorChar(CHAR_UUID, BLERead | BLENotify, 40);
 
 // ── Sensor pins ───────────────────────────────────────────────────────────────
 const int numSensors = 8;
-//   Index 0 → Fz  (Front Centre)kkk
+const int sensorPins[numSensors] = {A0, A1, A2, A3, A4, A5, A6, A7};
+
+// Sensor order must match the webapp's SENSOR_PROFILES:
+//   Index 0 → Fz  (Front Centre)
 //   Index 1 → FCz (Mid Centre)
 //   Index 2 → Cz  (Crown)
 //   Index 3 → Oz  (Back Centre)

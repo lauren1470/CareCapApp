@@ -158,11 +158,11 @@ export default function ClinicalDashboard({ data }) {
             <StatCard label="Session" value={sessionActive ? formatTime(sessionElapsed) : null}
               unit="" status="neutral" sub="30 min target" />
             <StatCard label="Pressure 1" value={pressure1} unit=" Pa"
-              status={pressure1 !== null && (pressure1 < 1400 || pressure1 > 1930) ? 'warning' : 'ok'}
-              sub="Target: 1,400–1,930 Pa" />
+              status={pressure1 !== null && (pressure1 < 2200 || pressure1 > 3200) ? 'warning' : 'ok'}
+              sub="Target: 2,200–3,200 Pa" />
             <StatCard label="Pressure 2" value={pressure2} unit=" Pa"
-              status={pressure2 !== null && (pressure2 < 1400 || pressure2 > 1930) ? 'warning' : 'ok'}
-              sub="Target: 1,400–1,930 Pa" />
+              status={pressure2 !== null && (pressure2 < 2200 || pressure2 > 3200) ? 'warning' : 'ok'}
+              sub="Target: 2,200–3,200 Pa" />
             <StatCard label="Status"
               value={connected ? (sessionActive ? 'Active' : 'Idle') : 'Off'}
               unit="" status={status === 'ok' ? 'ok' : status === 'warning' ? 'warning' : 'neutral'}
@@ -195,7 +195,7 @@ export default function ClinicalDashboard({ data }) {
               </div>
             </div>
             <div>Session duration: <strong>30 min</strong></div>
-            <div>Pressure range: <strong>1,400–1,930 Pa</strong></div>
+            <div>Pressure range: <strong>2,200–3,200 Pa</strong></div>
             <div className="mt-1 text-gray-500">Protocol: pre/during/post chemotherapy</div>
           </div>
 
@@ -282,10 +282,10 @@ export default function ClinicalDashboard({ data }) {
                 <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f7fc" />
                   <XAxis dataKey="time" tick={{ fontSize: 9 }} interval="preserveStartEnd" />
-                  <YAxis domain={[1000, 2400]} tick={{ fontSize: 9 }} />
+                  <YAxis domain={[1500, 3800]} tick={{ fontSize: 9 }} />
                   <Tooltip />
-                  <ReferenceLine y={1930} stroke="#f59e0b" strokeDasharray="4 2" />
-                  <ReferenceLine y={1400} stroke="#f59e0b" strokeDasharray="4 2" />
+                  <ReferenceLine y={3200} stroke="#f59e0b" strokeDasharray="4 2" />
+                  <ReferenceLine y={2200} stroke="#f59e0b" strokeDasharray="4 2" />
                   <Line type="monotone" dataKey="Pressure" stroke="#a3ceed"
                     strokeWidth={2} dot={false} isAnimationActive={false} />
                 </LineChart>

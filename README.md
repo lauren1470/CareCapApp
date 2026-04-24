@@ -109,7 +109,7 @@ Full monitoring dashboard with:
 | Parameter | Value |
 |---|---|
 | Session duration | 30 minutes |
-| Pressure (good contact) | 1,400–1,930 Pa |
+| Pressure (good contact) | 2,200–3,200 Pa |
 | Protocol | Pre / during / post chemotherapy |
 
 ---

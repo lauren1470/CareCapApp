@@ -218,7 +218,7 @@ export async function exportSessionXLSX({ history, alerts, safeRange, sessionEla
     ['Optimal Cooling',    '12–15°C'],
     ['Too Cold',           '<10°C'],
     ['Session duration',   '30 min'],
-    ['Pressure range',     '1,400–1,930 Pa'],
+    ['Pressure range',     '2,200–3,200 Pa'],
     ['Protocol',           'Pre / During / Post chemotherapy'],
   ]
   refs.forEach(([k, v]) => {

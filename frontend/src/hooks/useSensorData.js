@@ -53,9 +53,9 @@ function generateSensorTemp(elapsed, profile, demo = false) {
   return Math.round((cooled + profile.offset + noise) * 10) / 10
 }
 
-const SAFE_PRESSURE_MIN = 1400
-const SAFE_PRESSURE_MAX = 1930
-const PRESSURE_BASE     = 1666
+const SAFE_PRESSURE_MIN = 2200
+const SAFE_PRESSURE_MAX = 3200
+const PRESSURE_BASE     = 2700
 
 function generatePressure() {
   return Math.round(PRESSURE_BASE + (Math.random() - 0.5) * 80)
