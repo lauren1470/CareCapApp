@@ -135,3 +135,9 @@ The app must be served from **localhost** or **HTTPS** for Web Bluetooth to work
 - [ExcelJS](https://github.com/exceljs/exceljs) — formatted session export
 - [Lucide React](https://lucide.dev) — icons
 - [Web Bluetooth API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API) — BLE connection
+
+---
+
+## AI Disclosure
+
+The software for this project was developed with the assistance of Claude (Anthropic), an AI assistant. AI was used to help develop and debug the web application code and Arduino firmware. All clinical parameters, hardware decisions, and project direction were determined by the project team.
